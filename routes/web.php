@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,18 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => []], function () {
+   includeRouteFiles(__DIR__.'/backend/');
+});
+
+
+/*
+ * Frontend Routes
+ * Namespaces indicate folder structure
+ */
+
+Route::group(['as' => 'frontend.', 'middleware' => []], function () {
+    includeRouteFiles(__DIR__.'/frontend/');
+});
+
