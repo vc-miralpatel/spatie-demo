@@ -7,6 +7,7 @@
     {{-- <title>{{ getConfigContent()->name }}</title> --}}
     {{-- css links --}}
     @include('backend.includes._header_links')
+    @stack('custom-css')
 
 </head>
 
@@ -27,6 +28,6 @@
 
     {{-- js and jquery links --}}
     @include('backend.includes._footer_links')
-   
+    @stack('custom-js')
 </body>
 </html>
