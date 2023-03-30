@@ -72,7 +72,10 @@ class AdminLoginController extends Controller
            //dd("empty role");
             auth()->logout();
            // return redirect(RouteServiceProvider::ADMIN);
-             return redirect('/login')->with('fail', 'You have not access to login!');
+           //return redirect('/backend/login')->with('fail', 'You have not access to login!');
+           return redirect('/backend/login')->with('info','You have not access to login!');
+          //return redirect()->route('backend.adminlogin')->with('info','You have not access to login!'); //return with route anme
+
         }
         // else {
         //     dd("had role");

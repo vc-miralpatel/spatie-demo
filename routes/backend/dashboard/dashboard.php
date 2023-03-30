@@ -3,7 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\Dashboard\DashboardController;
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
+
 //Route::group(['prefix' => '', 'as' => '', 'controller' => AdminLoginController::class], function () {
 // Route::middleware('auth')->group([ 'controller' => DashboardController::class], function () {
 //     Route::get('/dashboard', 'index')->name('dashboard');

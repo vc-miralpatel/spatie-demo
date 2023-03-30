@@ -3,21 +3,21 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Dashboard</title>
+    {{-- <title>AdminLTE 3 | Dashboard</title> --}}
+    <title>{{ config('app.name') }} | @yield('title')</title>
     {{-- <title>{{ getConfigContent()->name }}</title> --}}
     {{-- css links --}}
     @include('backend.includes._header_links')
-    @stack('custom-css')
-
+    @include('backend.includes._custom_css')
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
     <!-- wrapper -->
     <div class="wrapper">
         <!-- Preloader -->
-        <div class="preloader flex-column justify-content-center align-items-center">
+        {{-- <div class="preloader flex-column justify-content-center align-items-center">
             <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-        </div>
+        </div> --}}
         @include('backend.includes._header')
         @include('backend.includes._sidebar')
         @yield('content')
@@ -28,6 +28,6 @@
 
     {{-- js and jquery links --}}
     @include('backend.includes._footer_links')
-    @stack('custom-js')
+    @include('backend.includes._custom_js')
 </body>
 </html>

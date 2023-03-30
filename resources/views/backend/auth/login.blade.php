@@ -15,6 +15,9 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('backend/dist/css/adminlte.min.css') }}">
 
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  
+
   {{-- write this page custiom css here or call external css file --}}
 
 </head>
@@ -109,6 +112,28 @@
 <script src="{{ asset('backend/dist/js/adminlte.min.js') }}"></script>
 
 {{-- write this page custom js here or call external file --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+  // success message popup notification
+  @if(Session::has('success'))
+      toastr.success("{{ Session::get('success') }}");
+  @endif
+
+  // info message popup notification
+  @if(Session::has('info'))
+      toastr.info("{{ Session::get('info') }}");
+  @endif
+
+  // warning message popup notification
+  @if(Session::has('warning'))
+      toastr.warning("{{ Session::get('warning') }}");
+  @endif
+
+  // error message popup notification
+  @if(Session::has('error'))
+      toastr.error("{{ Session::get('error') }}");
+  @endif
+</script>
 
 </body>
 </html>

@@ -1,7 +1,7 @@
 
-@extends('frontend.layouts.app')
+@extends('backend.layouts.app')
 
-@section('title', __('diya.frontend.page.titlelightup'))
+@section('title', 'Dashboard')
 
 @section('content')
 <!-- Content Wrapper. Contains page content -->

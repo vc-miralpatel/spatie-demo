@@ -20,7 +20,7 @@ use App\Http\Controllers\Backend\Auth\AdminLoginController;
 Route::group(['prefix' => '', 'as' => '', 'controller' => AdminLoginController::class], function () {
     //Route::get('/login', [AdminLoginController::class, 'showLoginForm']);
   //  Route::post('/login', [AdminLoginController::class, 'login'])->name('login');
-    Route::get('/login',  'showLoginForm');
+    Route::get('/login',  'showLoginForm')->name('adminlogin');
     Route::post('/login', 'login')->name('login');
 
     //only authenticated user access this route
