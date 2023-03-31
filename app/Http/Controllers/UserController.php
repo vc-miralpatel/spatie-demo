@@ -72,7 +72,6 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-
         try {
             $this->userRepository->store($request->all());
             //dd("in cont");
@@ -92,7 +91,7 @@ class UserController extends Controller
     {
         try {
             $user = $this->userRepository->show($id);
-            return redirect()->route('backend.users.show',compact('user'));
+            return view('backend.users.show',compact('user'));
         } catch(Exception $e){
             dd('user contro delete catche');
             return view('backend.users.index')->with('error','Something went wrong');

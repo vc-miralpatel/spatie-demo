@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Edit User')
+@section('title', 'Edit Role')
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -10,12 +10,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Edit User</h1>
+                        <h1 class="m-0">Edit Role</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Users</li>
+                            <li class="breadcrumb-item active">Roles</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -33,34 +33,40 @@
                         <!-- general form elements -->
                         <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Edit User</h3>
+                            <h3 class="card-title">Edit Role</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form method="POST" action="{{ route('backend.users.update',$user->id) }}">
+                        <form method="POST" action="{{ route('backend.roles.update',$role->id) }}">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
+                                @dd($role);
                                 <div class="form-group">
                                     <label for="name">Name</label>
-                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}" required autocomplete="name" autofocus placeholder="Enter Name">
+                                    
+                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $role->name }}" required autocomplete="name" autofocus placeholder="Enter Name">
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" required autocomplete="email" placeholder="Enter Email">
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <strong>Permission:</strong>
+                                        @foreach($permissions as $permission)
+                                            {{-- <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }}
+                                            {{ $value->name }}</label> --}}
+                                            <label class="ml-1 mr-1"><input type="checkbox" name="permissions[]" value="{{ $permission }}" >{{ $permission }}</label>
+                                            
+                                            @endforeach
+
+                                    </div>
                                 </div>
                                 {{-- <div class="form-group">
                                     <label for="password">Password</label>
+                                   
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password" placeholder="Enter Password">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -70,21 +76,23 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="password-confirm"> Confirm Password</label>
+                                   
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password" placeholder="Enter Password">
                                 </div> --}}
 
-                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                {{-- <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
                                         <strong>Role:</strong>
                                         <select name="roles[]" multiple>
                                             @foreach ($roles as $role)
-                                            <option value="{{ $role }}" {{is_array($userRole) && in_array($role, $userRole) ? 'selected' : '' }}>{{$role}}</option>
-                                                {{-- <option value="{{ $role }}" {{ ( $role == $userRole) ? 'selected' : '' }}>{{$role}}</option> --}}
+                                            <option value="{{ $role }}" {{is_array($roleRole) && in_array($role, $roleRole) ? 'selected' : '' }}>{{$role}}</option>
                                             @endforeach
                                         </select>
-                                        {{-- {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!} --}}
                                     </div>
-                                </div>
+                                </div> --}}
+
+                                
+                                
                             </div>
                             <!-- /.card-body -->
 

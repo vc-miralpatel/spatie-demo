@@ -47,6 +47,7 @@ class UserRepository extends Repository
             //$users = $this->model::all()->toArray();//working
             //$all_users_with_all_their_roles = User::with('roles')->get();
             $users = $this->model::with('roles')->get()->toArray();
+           // dd($users);
             return $users;
         } catch (Exception $e) {
             Log::info($e->getMessage());
@@ -81,7 +82,6 @@ class UserRepository extends Repository
      */
     public function show($id)
     {
-        //dd($id);
         try {
             $user = $this->model::find($id);
             return $user;
@@ -91,7 +91,7 @@ class UserRepository extends Repository
     }
 
     /**
-     * storing of the resource.
+     * editing of the resource.
      *
      * @return 
      */
@@ -101,7 +101,7 @@ class UserRepository extends Repository
             $user = $this->model::find($id);
             // $roles = Role::pluck('name','name')->all();
             // $userRole = $user->roles->pluck('name','name')->all();
-            
+
 
             // return view('users.edit',compact('user','roles','userRole'));
             return $user;

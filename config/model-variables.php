@@ -8,7 +8,9 @@
 
 
 use App\Models\User;
-use App\Models\Product;
+use Spatie\Permission\Models\Role;
+use App\Models\Product\Product;
+
 
 return [
     'models' => [

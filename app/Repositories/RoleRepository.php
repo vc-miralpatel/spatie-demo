@@ -12,11 +12,11 @@ use Spatie\Permission\Models\Role;
 
 
 
-class ProductRepository extends Repository
+class RoleRepository extends Repository
 {
     public function __construct()
     {
-        $this->model = config('model-variables.models.product.class');
+        $this->model = config('model-variables.models.role.class');
     }
 
      /**
@@ -27,8 +27,14 @@ class ProductRepository extends Repository
     public function index(): array
     {
         try {
-            $products = $this->model::all()->toArray();
-            return $products;
+            //$users = $this->user->all();
+            //$users = $this->model->all();//not working
+            
+            //$users = $this->model::all()->toArray();//working
+            //$all_users_with_all_their_roles = User::with('roles')->get();
+            $users = $this->model::with('roles')->get()->toArray();
+           // dd($users);
+            return $users;
         } catch (Exception $e) {
             Log::info($e->getMessage());
         }
@@ -42,11 +48,13 @@ class ProductRepository extends Repository
     public function store(array $data)
     {
         try {
-            $product = $this->model::create([
+            $user = $this->model::create([
                 'name' => $data['name'],
-                'detail' => $data['detail'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
             ]);
-            return $product;
+            $user->assignRole($data['roles']);
+            return $user;
         } catch (Exception $e) {
             Log::info($e->getMessage());
         }
@@ -61,24 +69,28 @@ class ProductRepository extends Repository
     public function show($id)
     {
         try {
-            $product = $this->model::find($id);
-            return $product;
+            $user = $this->model::find($id);
+            return $user;
         } catch (Exception $e) {
             Log::info($e->getMessage());
         }
     }
 
-
     /**
      * editing of the resource.
      *
-     * @return
+     * @return 
      */
     public function edit(int $id)
     {
         try {
-            $product = $this->model::find($id);
-            return $product;
+            $user = $this->model::find($id);
+            // $roles = Role::pluck('name','name')->all();
+            // $userRole = $user->roles->pluck('name','name')->all();
+
+
+            // return view('users.edit',compact('user','roles','userRole'));
+            return $user;
         } catch (Exception $e) {
             Log::info($e->getMessage());
         }
@@ -92,29 +104,34 @@ class ProductRepository extends Repository
     public function update(array $data,$id)
     {
         try {
-            $product = $this->model::find($id);
-            $product->update([
+            $user = $this->model::find($id);
+           // $user->update($data);
+            $user->update([
                 'name' => $data['name'],
-                'detail' => $data['detail'],
+                'email' => $data['email'],
+                //'password' => Hash::make($data['password']),
             ]);
-            return $product;
+             // DB::table('model_has_roles')->where('model_id',$id)->delete();
+            // $user->assignRole($request->input('roles'));
+            $user->syncRoles($data['roles']);
+            return $user;
         } catch (Exception $e) {
+           
             Log::info($e->getMessage());
-            dd("product upadte repocc");
+            dd("user upadte repo");
         }
     }
 
      /**
      * destroying of the resource.
      *
-     * @return
+     * @return 
      */
     public function destroy(int $id)
     {
-        //dd("uoioio destroy");
         try {
-            $product = $this->model::find($id)->delete();
-            return $product;
+            $user = $this->model::find($id)->delete();
+            return $user;
         } catch (Exception $e) {
             Log::info($e->getMessage());
         }

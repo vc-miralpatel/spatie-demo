@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Show User')
+@section('title', 'Show Product')
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -10,12 +10,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Show User</h1>
+                        <h1 class="m-0">Show Product</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Users</li>
+                            <li class="breadcrumb-item active">Products</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -31,12 +31,12 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Show User</h3>
+                                <h3 class="card-title">Show product</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                               <p><b>Name - </b>{{$user->name}}</p><br/>
-                               <p><b>Email - </b>{{$user->email}}</p><br/>
+                               <p><b>Name - </b>{{$product->name}}</p><br/>
+                               <p><b>Detail - </b>{{$product->detail}}</p><br/>
                             </div>
                             <!-- /.card-body -->
                         </div>

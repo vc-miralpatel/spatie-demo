@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use App\Repositories\ProductRepository;
-use App\Http\Requests\User\UserStoreRequest;
-use App\Http\Requests\User\UserUpdateRequest;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Product\ProductStoreRequest;
+use App\Http\Requests\Product\ProductUpdateRequest;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class ProductController extends Controller
 {
@@ -34,16 +35,16 @@ class ProductController extends Controller
     public function index()
     {
         try {
-            $users = $this->productRepository->index();
-             return view('backend.products.index',compact('users'));
-           //  return View::make('backend.users.index')->with('users', $users); //also working
+            $products = $this->productRepository->index();
+            return view('backend.products.index',compact('products'));
          } catch(Exception $e){
-             dd('user index catche');
-             return view('backend.users.index');
+            Log::info($e->getMessage());
+             dd('product index catche');
+             return view('backend.products.index');
          }
 
-        $products = Product::latest()->paginate(5);
-        return view('products.index',compact('products'));
+        //$products = Product::latest()->paginate(5);
+        //return view('products.index',compact('products'));
     }
 
     /**
@@ -53,7 +54,13 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $checkRole = Auth::user()->hasAnyRole('Super-Admin', 'admin') ? true : null;
+        if($checkRole) {
+            $roles = Role::pluck('name','name')->all();
+            return view('backend.products.create',compact('roles'));
+        } else {
+            return redirect()->route('backend.products.index')->with('info',"Your role doesn't enough to create product");
+        }
     }
 
     /**
@@ -62,9 +69,17 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
-        //
+        //dd("in stor fun of pro cont");
+        try {
+            $this->productRepository->store($request->all());
+            //dd("in pro cont");
+            return redirect()->route('backend.products.index')->with('success','Product created successfully');
+         } catch(Exception $e){
+            dd('product store catche');
+             return view('backend.products.index');
+         }
     }
 
     /**
@@ -75,7 +90,13 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $product = $this->productRepository->show($id);
+            return view('backend.products.show',compact('product'));
+        } catch(Exception $e){
+            dd('user contro delete catche');
+            return view('backend.products.index')->with('error','Something went wrong');
+        }
     }
 
     /**
@@ -86,7 +107,19 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $checkRole = Auth::user()->hasAnyRole('Super-Admin', 'admin') ? true : null;
+        if($checkRole) {
+            try {
+                $product = $this->productRepository->edit($id);
+                return view('backend.products.edit',compact('product'));
+            }
+            catch(Exception $e){
+                dd('product edit catche');
+                return view('backend.products.index');
+            }
+        } else {
+            return redirect()->route('backend.products.index')->with('info',"Your role doesn't enough to edit product");
+        }
     }
 
     /**
@@ -96,9 +129,15 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductUpdateRequest $request, $id)
     {
-        //
+        try {
+            $this->productRepository->update($request->all(),$id);
+            return redirect()->route('backend.products.index')->with('success','Product updated successfully');
+        } catch(Exception $e){
+            dd('product contro store catche');
+             return view('backend.products.index')->with('error','Something went wrong');
+        }
     }
 
     /**
@@ -109,6 +148,17 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $checkRole = Auth::user()->hasAnyRole('Super-Admin', 'admin') ? true : null;
+        if($checkRole) {
+            try {
+                $this->productRepository->destroy($id);
+                return redirect()->route('backend.products.index')->with('success','Product deleted successfully');
+            } catch(Exception $e){
+                dd('Product contro delete catche');
+                return view('backend.products.index')->with('error','Something went wrong');
+            }
+        } else {
+            return redirect()->route('backend.products.index')->with('info',"Your role doesn't enough to destroy product");
+        }
     }
 }

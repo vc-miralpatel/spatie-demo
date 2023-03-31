@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Create User')
+@section('title', 'Create Role')
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -10,12 +10,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Create User</h1>
+                        <h1 class="m-0">Create Role</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Users</li>
+                            <li class="breadcrumb-item active">Roles</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -33,16 +33,15 @@
                         <!-- general form elements -->
                         <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Create User</h3>
+                            <h3 class="card-title">Create Role</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form method="POST" action="{{ route('backend.users.store') }}">
+                        <form method="POST" action="{{ route('backend.roles.store') }}">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="name">Name</label>
-                                    {{-- <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email"> --}}
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Enter Name">
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -50,40 +49,15 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
-                                    <label for="email">Email</label>
-                                    {{-- <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email"> --}}
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Enter Email">
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="password">Password</label>
-                                    {{-- <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"> --}}
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Enter Password">
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="password-confirm"> Confirm Password</label>
-                                    {{-- <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"> --}}
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Enter Password">
-                                </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
-                                        <strong>Role:</strong>
-                                        <select name="roles[]" multiple>
-                                            @foreach ($roles as $role)
-                                                <option value="{{ $role }}">{{$role}}</option>
-                                            @endforeach
-                                        </select>
-                                        {{-- {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!} --}}
+                                        <strong>Permission:</strong>
+                                        @foreach($permissions as $permission)
+                                            {{-- <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }}
+                                            {{ $value->name }}</label> --}}
+                                            <label class="ml-1 mr-1"><input type="checkbox" name="permissions[]" value="{{ $permission }}" >{{ $permission }}</label>
+                                        @endforeach
+
                                     </div>
                                 </div>
                                 {{-- <div class="form-check">
@@ -111,3 +85,4 @@
     <!-- /.content-wrapper -->
 
 @endsection
+

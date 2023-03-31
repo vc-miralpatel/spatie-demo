@@ -73,6 +73,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{ route('backend.roles.index') }}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Roles
+              </p>
+            </a>
+          </li>
           {{-- <li class="nav-item">
             <a href="{{ route('backend.articles.index') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -85,8 +93,7 @@
             <a href="{{ route('backend.products.index') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Product
-                {{-- <span class="right badge badge-danger">New</span> --}}
+                Products
               </p>
             </a>
           </li>
