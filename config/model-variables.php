@@ -23,6 +23,14 @@ return [
         ],
 
          /*
+        * User table and model
+        */
+        'role' => [
+            'table' => 'roles',
+            'class' => Role::class,
+        ],
+
+         /*
         * Product table and model
         */
         'product' => [

@@ -117,7 +117,7 @@
         $(function () {
           $("#roleTable").DataTable({
             "responsive": true, "lengthChange": false, "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
             "paging": true,
             "lengthChange": false,
             "searching": false,

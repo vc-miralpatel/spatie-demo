@@ -14,13 +14,11 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+/*
+ * Backend Routes
+ * Namespaces indicate folder structure
+ */
 
 Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => []], function () {
    includeRouteFiles(__DIR__.'/backend/');
@@ -35,4 +33,13 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.', 'middleware' => []], fu
 Route::group(['as' => 'frontend.', 'middleware' => []], function () {
     includeRouteFiles(__DIR__.'/frontend/');
 });
+
+//frontend index(welcome) page
+Route::get('/', function () {
+    return view('welcome');
+});
+
+//frontend auth routes
+Auth::routes();
+
 

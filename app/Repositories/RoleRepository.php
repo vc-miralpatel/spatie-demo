@@ -24,17 +24,12 @@ class RoleRepository extends Repository
      *
      * @return array
      */
-    public function index(): array
+    public function index()
     {
         try {
-            //$users = $this->user->all();
-            //$users = $this->model->all();//not working
-            
-            //$users = $this->model::all()->toArray();//working
-            //$all_users_with_all_their_roles = User::with('roles')->get();
-            $users = $this->model::with('roles')->get()->toArray();
-           // dd($users);
-            return $users;
+            $roles = $this->model::all();
+          // dd($roles);
+            return $roles;
         } catch (Exception $e) {
             Log::info($e->getMessage());
         }

@@ -41,10 +41,9 @@
                             @csrf
                             @method('PUT')
                             <div class="card-body">
-                                @dd($role);
+                                {{-- @dd($role); --}}
                                 <div class="form-group">
                                     <label for="name">Name</label>
-                                    
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $role->name }}" required autocomplete="name" autofocus placeholder="Enter Name">
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -55,44 +54,14 @@
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
                                         <strong>Permission:</strong>
-                                        @foreach($permissions as $permission)
+                                        @foreach($permissions as $permissionId => $permission)
                                             {{-- <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }}
                                             {{ $value->name }}</label> --}}
-                                            <label class="ml-1 mr-1"><input type="checkbox" name="permissions[]" value="{{ $permission }}" >{{ $permission }}</label>
-                                            
+                                            <label class="ml-1 mr-1"><input type="checkbox" name="permissions[]" value="{{ $permissionId }}" {{ in_array($permissionId, $rolePermissions) ? 'checked' : '' }}>{{ $permission }}</label>
                                             @endforeach
 
                                     </div>
                                 </div>
-                                {{-- <div class="form-group">
-                                    <label for="password">Password</label>
-                                   
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password" placeholder="Enter Password">
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="password-confirm"> Confirm Password</label>
-                                   
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password" placeholder="Enter Password">
-                                </div> --}}
-
-                                {{-- <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <div class="form-group">
-                                        <strong>Role:</strong>
-                                        <select name="roles[]" multiple>
-                                            @foreach ($roles as $role)
-                                            <option value="{{ $role }}" {{is_array($roleRole) && in_array($role, $roleRole) ? 'selected' : '' }}>{{$role}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div> --}}
-
-                                
-                                
                             </div>
                             <!-- /.card-body -->
 

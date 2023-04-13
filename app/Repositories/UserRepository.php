@@ -125,10 +125,13 @@ class UserRepository extends Repository
                 'email' => $data['email'],
                 //'password' => Hash::make($data['password']),
             ]);
+            //way 1
              // DB::table('model_has_roles')->where('model_id',$id)->delete();
             // $user->assignRole($request->input('roles'));
+            //way 2
             $user->syncRoles($data['roles']);
-            return $user;
+           
+           // return $user;
         } catch (Exception $e) {
            
             Log::info($e->getMessage());

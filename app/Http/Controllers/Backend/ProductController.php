@@ -24,6 +24,13 @@ class ProductController extends Controller
      */
     public function __construct(ProductRepository $productRepository)
     {
+        //edit articles,delete articles,publish articles,unpublish articles
+
+        // $this->middleware('permission:product-list|product-create|product-edit|product-delete', ['only' => ['index','show']]);
+
+        //$this->middleware(['role:writer','permission:publish articles'], ['only' => ['index']]);
+        //$this->middleware(['role:writer','permission:edit articles'], ['only' => ['show']]);
+        //$this->middleware(['role_or_permission:Writer|publish articles']);
         $this->productRepository = $productRepository;
     }
 
@@ -54,13 +61,13 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $checkRole = Auth::user()->hasAnyRole('Super-Admin', 'admin') ? true : null;
-        if($checkRole) {
+        //$checkRole = Auth::user()->hasAnyRole('Super-Admin', 'admin') ? true : null;
+        //if($checkRole) {
             $roles = Role::pluck('name','name')->all();
             return view('backend.products.create',compact('roles'));
-        } else {
-            return redirect()->route('backend.products.index')->with('info',"Your role doesn't enough to create product");
-        }
+       // } else {
+          //  return redirect()->route('backend.products.index')->with('info',"Your role doesn't enough to create product");
+       //}
     }
 
     /**
@@ -107,8 +114,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $checkRole = Auth::user()->hasAnyRole('Super-Admin', 'admin') ? true : null;
-        if($checkRole) {
+        //$checkRole = Auth::user()->hasAnyRole('Super-Admin', 'admin') ? true : null;
+        //if($checkRole) {
             try {
                 $product = $this->productRepository->edit($id);
                 return view('backend.products.edit',compact('product'));
@@ -117,9 +124,9 @@ class ProductController extends Controller
                 dd('product edit catche');
                 return view('backend.products.index');
             }
-        } else {
-            return redirect()->route('backend.products.index')->with('info',"Your role doesn't enough to edit product");
-        }
+        //} else {
+          //  return redirect()->route('backend.products.index')->with('info',"Your role doesn't enough to edit product");
+        //}
     }
 
     /**
